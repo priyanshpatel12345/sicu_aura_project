@@ -10,9 +10,7 @@ function AllData() {
   const [search, setSearch] = useState("");
   const [allHospitals, setAllHospitals] = useState([]);
 
-  const { currentUser, capturedImage } = useSelector((state) => state.user);
-  const [capturePhoto, setCaptureadPhoto] = useState("");
-  const [click, setClick] = useState(false);
+  const { currentUser } = useSelector((state) => state.user);
 
   const handleSearch = () => {
     const filteredHospitals = allHospitals.filter(
@@ -63,46 +61,42 @@ function AllData() {
 
   return (
     <>
-      {click ? (
-        <div className="min-h-screen min-w-screen">
-          <img src={capturedImage} alt="" />
+      <div className="bg-blue-50">
+        <Header />
+        <div className="flex justify-end pr-80">
+          <img src={image} alt="" className=" mt-3 w-[83px]  h-[83px]" />
         </div>
-      ) : (
-        <div className="">
-          <Header />
-          <div className="flex justify-end pr-80">
-            <img src={image} alt="" className=" mt-3 w-[83px]  h-[83px]" />
+        {/* Text and Search */}
+        <div className="flex justify-between items-center px-20 mt-1">
+          {/* Text */}
+          <div>
+            <p className="text-[#404040] text-4xl pt-0 font-semibold">
+              Hospital Registrations
+            </p>
           </div>
-          {/* Text and Search */}
-          <div className="flex justify-between items-center px-20 mt-1">
-            {/* Text */}
-            <div>
-              <p className="text-[#404040] text-4xl pt-0 font-semibold">
-                Hospital Registrations
-              </p>
+          {/* Search */}
+          <div className="flex gap-3">
+            <div className="flex items-center shadow-md px-4 rounded-md p-2 w-[25rem] justify-between border border-gray-300 bg-white">
+              <input
+                type="text"
+                placeholder="Search"
+                className="outline-none ml-1 border-none "
+                onChange={(e) => setSearch(e.target.value)}
+                // value={search}
+              />
+              <IoSearch
+                className="text-gray-400 ml-1 cursor-pointer "
+                onClick={handleSearch}
+              />
             </div>
-            {/* Search */}
-            <div className="flex gap-3">
-              <div className="flex items-center shadow-md px-4 rounded-md p-2 w-[25rem] justify-between border border-gray-300 bg-white">
-                <input
-                  type="text"
-                  placeholder="Search"
-                  className="outline-none ml-1 border-none "
-                  onChange={(e) => setSearch(e.target.value)}
-                  // value={search}
-                />
-                <IoSearch
-                  className="text-gray-400 ml-1 cursor-pointer "
-                  onClick={handleSearch}
-                />
-              </div>
-              <div className="ml-2 p-3 border border-gray-300 bg-white flex items-center shadow-md rounded-md">
-                <FaSort className="text-gray-400 " />
-              </div>
+            <div className="ml-2 p-3 border border-gray-300 bg-white flex items-center shadow-md rounded-md">
+              <FaSort className="text-gray-400 " />
             </div>
           </div>
-          {/* Table */}
-          <table className=" table-auto overflow-scroll m-6">
+        </div>
+        {/* Table */}
+        <div className="scrollbar overflow-x-scroll flex">
+          <table className=" table-auto overflow-x-scroll m-6  ">
             <thead className="bg-[#0DF5E3] ">
               <tr className="">
                 <th className="px-4 py-2 rounded-l-full">No.</th>
@@ -129,10 +123,10 @@ function AllData() {
                   key={index}
                   className={`${
                     index % 2 === 0 ? "bg-[#ffffff]" : "bg-[#f5f5f5]"
-                  } text-center `}
+                  } text-center border-r-ro`}
                 >
                   <td className="px-4 py-2 rounded-l-full">{index + 1}</td>
-                  <td className="px-4 py-2">
+                  <td className="px-4 py-2  rounded-l-full">
                     {new Date(hospital.RegistrationDate).toLocaleString(
                       "en-IN",
                       {
@@ -161,20 +155,34 @@ function AllData() {
                   <td className="px-4 py-2">
                     {hospital.hospitalRegisterNumber}
                   </td>
-                  <td
-                    className="px-4 py-2 text-blue-500 cursor-pointer"
-                    onClick={() => setClick(true)}
-                  >
-                    file
+                  <td className="px-4 py-2 text-blue-500 cursor-pointer">
+                    {hospital.registrationCertificateUpload}
                   </td>
                   <td className="px-4 py-2">{hospital.wardNumber}</td>
-                  <td className="px-4 py-2 ">{hospital.ambulanceAvailable}</td>
+                  <td className="px-4 py-2  rounded-r-full">
+                    {hospital.ambulanceAvailable}
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
+          <div className="">
+            <select value="Inactive">
+              <option name="" id="" value="Active" className="">
+                Active
+              </option>
+              <option
+                name=""
+                id=""
+                value="Inactive"
+                className="bg-[#AF2626] text-black rounded-xl pt-3"
+              >
+                Inactive
+              </option>
+            </select>
+          </div>
         </div>
-      )}
+      </div>
     </>
   );
 }

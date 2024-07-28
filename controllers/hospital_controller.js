@@ -42,6 +42,10 @@ export const register = async (req, res, next) => {
     next(errorHandler(400, "All fields are required"));
   }
 
+  if (password.length <= 6 && !password.includes("@")) {
+    return;
+  }
+
   const hashedPassword = bcryptjs.hashSync(password, 10);
 
   const newHospital = new Hospital({

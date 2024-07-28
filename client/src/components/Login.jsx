@@ -5,19 +5,24 @@ import writing from "../assets/sicu-aura_logo-removebg 2.png";
 import nextLogo from "../assets/image 12.png";
 import { Link, useNavigate } from "react-router-dom";
 import Face from "./Face";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   signInStart,
   signInSuccess,
   signInFailure,
   specialAccessCode,
 } from "../Redux/Hospital/userSlice";
+import { FloatingLabel, Modal } from "flowbite-react";
+import { toast } from "react-toastify";
+import checkMark from "../assets/Checkmark.png";
 
 function Login() {
   const [formData, setFormData] = useState("");
   const [isLoginCompleted, setIsLoginCompleted] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { error } = useSelector((state) => state.user);
+  const [showModal, setShowModal] = useState(false);
 
   const handleInput = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -36,19 +41,29 @@ function Login() {
       });
 
       const data = await res.json();
-      console.log(data);
 
       if (res.ok) {
-        setIsLoginCompleted(true);
+        setShowModal(true);
         dispatch(signInSuccess(data.validHospital));
         dispatch(specialAccessCode(data.specialAccessCode));
       } else {
-        console.log(data.message);
+        dispatch(signInFailure(data.message));
       }
     } catch (error) {
       dispatch(signInFailure(error.message));
     }
   };
+
+  useEffect(() => {
+    let timer;
+    if (showModal) {
+      timer = setTimeout(() => {
+        setShowModal(false);
+        setIsLoginCompleted(true);
+      }, 2000);
+    }
+    return () => clearTimeout(timer);
+  }, [showModal]);
 
   return (
     <>
@@ -90,7 +105,7 @@ function Login() {
           <div className="w-[70%] h-screen ">
             <div className="flex  gap-44 mt-4 items-center ">
               <img src={nextLogo} alt="" className="w-[98px] h-[98px] ml-20" />
-              <div className="w-[230px] h-[45px] flex gap-2">
+              <div className="w-[230px] h-[45px] flex gap-2 ml-20">
                 <Link to="/signup">
                   <span className="text-[#CDCDCD] text-3xl font-semibold">
                     Sign Up /
@@ -117,33 +132,40 @@ function Login() {
                 className="space-y-1  w-[350px] h-[540px] mx-auto"
               >
                 <div className="grid gap-x-24 gap-8 mt-10">
-                  <input
+                  <FloatingLabel
+                    variant="standard"
+                    label="Hospital Name"
                     type="text"
                     id="hospitalName"
-                    placeholder="Hospital Name"
-                    className="w-full p-2 border-b-2 border-gray-300 rounded"
                     onChange={handleInput}
+                    className="focus:border-black focus:text-black  "
                   />
-                  <input
-                    id="email"
+
+                  <FloatingLabel
+                    variant="standard"
+                    label="Email ID"
                     type="email"
-                    placeholder="Email ID"
-                    className="w-full p-2 border-b-2 border-gray-300 rounded"
+                    id="email"
                     onChange={handleInput}
+                    className="focus:border-black focus:text-black  "
                   />
-                  <input
-                    id="password"
+
+                  <FloatingLabel
+                    variant="standard"
+                    label="password"
                     type="password"
-                    placeholder="Password"
-                    className="w-full p-2 border-b-2 border-gray-300 rounded"
+                    id="password"
                     onChange={handleInput}
+                    className="focus:border-black focus:text-black  "
                   />
-                  <input
-                    id="specialAccessCode"
+
+                  <FloatingLabel
                     type="type"
-                    placeholder="Special Access Code"
-                    className="w-full p-2 border-b-2 border-gray-300 rounded"
+                    variant="standard"
+                    label="Special Access Code"
+                    id="specialAccessCode"
                     onChange={handleInput}
+                    className="focus:border-black focus:text-black  "
                   />
                 </div>
               </form>
@@ -162,6 +184,27 @@ function Login() {
               </p>
             </div>
           </div>
+          {/* {error && toast(error)} */}
+          <Modal
+            show={showModal}
+            onClose={() => setShowModal(false)}
+            popup
+            size="xl"
+          >
+            <div className="border-4 rounded-lg  shadow-custom-shadow  border-gray-300">
+              <Modal.Body>
+                <div className="text-center mt-5 ">
+                  <img
+                    src={checkMark}
+                    className="h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto"
+                  />
+                  <h3 className="text-[#505050]  mb-5 text-2xl font-semibold">
+                    Your Login has been Successful
+                  </h3>
+                </div>
+              </Modal.Body>
+            </div>
+          </Modal>
         </div>
       )}
     </>

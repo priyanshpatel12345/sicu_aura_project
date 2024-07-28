@@ -29,6 +29,7 @@ export const userSlice = createSlice({
       state.currentUser = null;
       state.error = null;
       state.loading = false;
+      state.code = null;
     },
     specialAccessCode: (state, action) => {
       state.code = action.payload;

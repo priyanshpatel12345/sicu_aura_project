@@ -15,6 +15,8 @@ import {
 import { app } from "../firebase";
 import { useSelector, useDispatch } from "react-redux";
 import { setImageFileUrl } from "../Redux/Hospital/userSlice";
+import { Modal } from "flowbite-react";
+import team from "../assets/medical-team.png";
 
 const Face = () => {
   const webcamRef = useRef(null);
@@ -25,6 +27,7 @@ const Face = () => {
   const [imageError, setImageError] = useState(false);
   const dispatch = useDispatch();
   const [imageFileUrl, setImageFileURL] = useState();
+  const [showModal, setShowModal] = useState(false);
 
   const capturePhoto = () => {
     if (webcamRef.current) {
@@ -77,6 +80,17 @@ const Face = () => {
       handleFileUpload(capturedImage);
     }
   }, [capturedImage]);
+
+  useEffect(() => {
+    let timer;
+    if (showModal) {
+      timer = setTimeout(() => {
+        setShowModal(false);
+        navigate("/getdata");
+      }, 2000);
+    }
+    return () => clearTimeout(timer);
+  }, [showModal, navigate]);
 
   return (
     <div className="flex">
@@ -155,12 +169,12 @@ const Face = () => {
                     >
                       Re-take
                     </button>
-                    <NavLink
-                      to="/getdata"
+                    <button
+                      onClick={() => setShowModal(true)}
                       className=" text-white bg-[#261E3B] p-2 font-semibold text-sm mt-10 rounded-lg px-6"
                     >
                       Continue
-                    </NavLink>
+                    </button>
                   </div>
                 </>
               ) : (
@@ -198,6 +212,26 @@ const Face = () => {
           )}
         </div>
       </div>
+      <Modal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        popup
+        size="xl"
+      >
+        <div className="border-4 rounded-lg  shadow-custom-shadow  border-gray-300">
+          <Modal.Body>
+            <div className="text-center mt-5 ">
+              <img
+                src={team}
+                className="h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto"
+              />
+              <h3 className="text-[#505050]  mb-5 text-2xl font-semibold">
+                Thank you for choosing our hospital.
+              </h3>
+            </div>
+          </Modal.Body>
+        </div>
+      </Modal>
     </div>
   );
 };

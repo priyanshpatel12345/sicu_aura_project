@@ -19,7 +19,7 @@ import {
 } from "../Redux/Hospital/userSlice";
 import { app } from "../firebase";
 import { toast } from "react-toastify";
-import { Modal } from "flowbite-react";
+import { Modal, FloatingLabel } from "flowbite-react";
 import checkMark from "../assets/Checkmark.png";
 
 const SignUp = () => {
@@ -110,7 +110,7 @@ const SignUp = () => {
       if (res.ok) {
         setShowModal(true);
         dispatch(signInSuccess(data));
-        // navigate("/login");
+        navigate("/login");
       } else {
         dispatch(signInFailure(data.message));
       }
@@ -124,7 +124,6 @@ const SignUp = () => {
     if (showModal) {
       timer = setTimeout(() => {
         setShowModal(false);
-        navigate("/login");
       }, 2000);
     }
     return () => clearTimeout(timer);
@@ -184,68 +183,81 @@ const SignUp = () => {
           className="space-y-0 mx-10 px-10 max-h-screen"
         >
           <div className="grid grid-cols-2 gap-x-24 gap-4  max-h-screen">
-            <input
-              type="text"
+            <FloatingLabel
+              variant="standard"
+              label="hospitalName"
               id="hospitalName"
-              placeholder="Hospital Name"
-              className="w-full p-2 border-b-2 border-gray-300 "
               onChange={handleInput}
+              className="focus:border-black focus:text-black  "
             />
-            <input
+
+            <FloatingLabel
+              variant="standard"
+              label="Email ID"
               type="email"
               id="email"
-              placeholder="Email ID"
-              className="w-full p-2 border-b-2   border-gray-300 "
               onChange={handleInput}
+              className="focus:border-black focus:text-black  "
             />
-            <input
-              type="text"
+
+            <FloatingLabel
+              variant="standard"
+              label="Address"
               id="address"
-              placeholder="Address"
-              className="w-full p-2 border-b-2 border-gray-300 "
               onChange={handleInput}
+              className="focus:border-black focus:text-black  "
             />
-            <input
-              type="tel"
+
+            <FloatingLabel
+              variant="standard"
+              label="Phone Number"
+              type="Number"
               id="phoneNumber"
-              placeholder="Phone Number"
-              className="w-full p-2 border-b-2 border-gray-300 "
               onChange={handleInput}
+              className="focus:border-black focus:text-black  "
             />
-            <input
-              type="text"
+
+            <FloatingLabel
+              variant="standard"
+              label="City"
               id="city"
-              placeholder="City"
-              className="w-full p-2 border-b-2 border-gray-300 "
               onChange={handleInput}
+              className="focus:border-black focus:text-black  "
             />
-            <input
-              type="text"
+
+            <FloatingLabel
+              variant="standard"
+              label="Hospital Registration Number"
+              type="Number"
               id="hospitalRegisterNumber"
-              placeholder="Hospital Registration Number"
-              className="w-full p-2 border-b-2 border-gray-300 "
               onChange={handleInput}
+              className="focus:border-black focus:text-black  "
             />
-            <input
-              type="text"
+
+            <FloatingLabel
+              variant="standard"
+              label="State"
               id="state"
-              placeholder="State"
-              className=" p-2 border-b-2 border-gray-300 "
               onChange={handleInput}
+              className="focus:border-black focus:text-black  "
             />
-            <input
-              type="text"
+
+            <FloatingLabel
+              variant="standard"
+              label="Emergency-Ward Number"
+              type="Number"
               id="wardNumber"
-              placeholder="Emergency-Ward Number"
-              className="w-full p-2 border-b-2 border-gray-300 "
               onChange={handleInput}
+              className="focus:border-black focus:text-black  "
             />
-            <input
-              type="text"
+
+            <FloatingLabel
+              variant="standard"
+              type="Number"
+              label="Pincode"
               id="pinCode"
-              placeholder="Pincode"
-              className="w-full p-2 border-b-2 border-gray-300 "
               onChange={handleInput}
+              className="focus:border-black focus:text-black  "
             />
 
             <div className="flex flex-col justify-start items-start gap-4 ">
@@ -285,38 +297,43 @@ const SignUp = () => {
               </button>
             </div>
 
-            <input
-              type="text"
+            <FloatingLabel
+              variant="standard"
+              label="Hospital Registration Date:(dd-mm-yyyy)"
               id="registrationDate"
-              placeholder="Hospital Registration Date:(dd-mm-yyyy)"
-              className="w-full p-2 border-b-2 border-gray-300 "
               onChange={handleInput}
+              className="focus:border-black focus:text-black  "
             />
-            <input
-              type="number"
+
+            <FloatingLabel
+              variant="standard"
+              label="Number Of Ambulance available"
+              type="Number"
               id="ambulanceAvailable"
-              placeholder="Number Of Ambulance available"
-              className="w-full p-2 border-b-2 border-gray-300 "
               onChange={handleInput}
+              className="focus:border-black focus:text-black  "
             />
-            <input
+            <FloatingLabel
+              variant="standard"
               type="password"
+              label="Create Password"
               id="password"
-              placeholder="Create Password"
-              className="w-full p-2 border-b-2 border-gray-300 "
               onChange={handleInput}
+              className="focus:border-black focus:text-black  "
             />
-            <input
-              id="conformPassoword"
+
+            <FloatingLabel
+              variant="standard"
               type="password"
-              placeholder="Conform Password"
-              className="w-full p-2 border-b-2 border-gray-300 "
+              label="Conform Password"
+              id="conformPassoword"
               onChange={handleInput}
+              className="focus:border-black focus:text-black  "
             />
           </div>
 
-          <div className="flex flex-col justify-center items-center gap-8 ">
-            <div className="flex justify-center mt-5">
+          <div className="flex flex-col justify-center items-center gap-1 ">
+            <div className="flex justify-center mt-2">
               <button
                 type="submit"
                 className="w-[120px] h-[50px] bg-[#261E3B] text-center text-xl text-white  rounded-lg hover:opacity-45"

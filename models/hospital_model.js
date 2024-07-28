@@ -60,6 +60,11 @@ const hospitalSchema = new mongoose.Schema(
     loginImage: {
       type: String,
     },
+    status: {
+      type: String,
+      enum: ["Active", "Inactive"],
+      default: "Inactive",
+    },
   },
   { timestamps: true }
 );
