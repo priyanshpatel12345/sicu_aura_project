@@ -9,6 +9,7 @@ function AllData() {
   const [hospitals, setHospitals] = useState([]);
   const [search, setSearch] = useState("");
   const [allHospitals, setAllHospitals] = useState([]);
+  const [sortType, setSortType] = useState("alphabetical");
 
   const { currentUser } = useSelector((state) => state.user);
 
@@ -59,9 +60,29 @@ function AllData() {
     // getData();
   }, []);
 
+  const sortHospitals = () => {
+    const sortedHospitals = [...hospitals];
+    if (sortType === "alphabetical") {
+      sortedHospitals.sort((a, b) =>
+        a.hospitalName.localeCompare(b.hospitalName)
+      );
+    } else if (sortType === "date") {
+      sortedHospitals.sort(
+        (a, b) => new Date(a.registrationDate) - new Date(b.registrationDate)
+      );
+    }
+    setHospitals(sortedHospitals);
+  };
+
+  const toggleSortType = () => {
+    setSortType((prevType) =>
+      prevType === "alphabetical" ? "date" : "alphabetical"
+    );
+  };
+
   return (
     <>
-      <div className="bg-blue-50">
+      <div className="bg-blue-50 h-screen">
         <Header />
         <div className="flex justify-end pr-80">
           <img src={image} alt="" className=" mt-3 w-[83px]  h-[83px]" />
@@ -89,7 +110,10 @@ function AllData() {
                 onClick={handleSearch}
               />
             </div>
-            <div className="ml-2 p-3 border border-gray-300 bg-white flex items-center shadow-md rounded-md">
+            <div
+              onClick={sortHospitals}
+              className="ml-2 p-3 border cursor-pointer border-gray-300 bg-white flex items-center shadow-md rounded-md"
+            >
               <FaSort className="text-gray-400 " />
             </div>
           </div>
@@ -126,7 +150,7 @@ function AllData() {
                   } text-center border-r-ro`}
                 >
                   <td className="px-4 py-2 rounded-l-full">{index + 1}</td>
-                  <td className="px-4 py-2  rounded-l-full">
+                  <td className="px-4 py-2  ">
                     {new Date(hospital.RegistrationDate).toLocaleString(
                       "en-IN",
                       {
@@ -166,21 +190,6 @@ function AllData() {
               ))}
             </tbody>
           </table>
-          <div className="">
-            <select value="Inactive">
-              <option name="" id="" value="Active" className="">
-                Active
-              </option>
-              <option
-                name=""
-                id=""
-                value="Inactive"
-                className="bg-[#AF2626] text-black rounded-xl pt-3"
-              >
-                Inactive
-              </option>
-            </select>
-          </div>
         </div>
       </div>
     </>
