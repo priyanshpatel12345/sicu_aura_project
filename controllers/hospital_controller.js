@@ -25,7 +25,7 @@ export const register = async (req, res, next) => {
   } = req.body;
 
   if (
-    (!hospitalName,
+    !hospitalName,
     !address,
     !city,
     !state,
@@ -38,7 +38,7 @@ export const register = async (req, res, next) => {
     !registrationCertificateUpload,
     !password,
     !wardNumber)
-  ) {
+   {
     next(errorHandler(400, "All fields are required"));
   }
 
