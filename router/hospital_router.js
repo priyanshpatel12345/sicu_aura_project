@@ -7,8 +7,7 @@ import {
   signout,
 } from "../controllers/hospital_controller.js";
 import { verifyToken } from "../utils/verifyUser.js";
-import validate from "../utils/validate-middleware.js";
-import { signupSchema } from "../validator/auth-validator.js";
+
 const router = express.Router();
 
 router.post("/signup", register);

@@ -151,7 +151,7 @@ function AllData() {
                 >
                   <td className="px-4 py-2 rounded-l-full">{index + 1}</td>
                   <td className="px-4 py-2  ">
-                    {new Date(hospital.RegistrationDate).toLocaleString(
+                    {new Date(hospital.registrationDate).toLocaleString(
                       "en-IN",
                       {
                         timeZone: "Asia/Kolkata",
@@ -173,7 +173,7 @@ function AllData() {
                   <td className="px-4 py-2">{hospital.state}</td>
                   <td className="px-4 py-2">{hospital.pinCode}</td>
                   <td className="px-4 py-2">
-                    {new Date(hospital.RegistrationDate).toLocaleString()}
+                    {new Date(hospital.registrationDate).toLocaleString()}
                   </td>
 
                   <td className="px-4 py-2">

@@ -4,7 +4,7 @@ import SignUp from "./components/SignUp";
 import Login from "./components/Login";
 import OnlyAdminPrivateRoute from "./components/OnlyAdminRoute";
 import AllData from "./components/AllData";
-import Home from "./pages/Home";
+import Home from "./page/Home";
 
 const App = () => {
   return (

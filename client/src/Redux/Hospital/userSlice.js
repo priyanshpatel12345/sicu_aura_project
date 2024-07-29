@@ -33,7 +33,7 @@ export const userSlice = createSlice({
     },
     specialAccessCode: (state, action) => {
       state.code = action.payload;
-      state.error = false;
+      state.error = null;
       state.loading = false;
     },
     setImageFileUrl: (state, action) => {

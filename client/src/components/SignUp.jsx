@@ -90,9 +90,9 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(signInStart());
 
     try {
+      dispatch(signInStart());
       if (formData.password !== formData.conformPassoword) {
         toast("password do not match");
         return;
@@ -108,9 +108,8 @@ const SignUp = () => {
       const data = await res.json();
 
       if (res.ok) {
-        setShowModal(true);
         dispatch(signInSuccess(data));
-        navigate("/login");
+        setShowModal(true);
       } else {
         dispatch(signInFailure(data.message));
       }
@@ -124,10 +123,11 @@ const SignUp = () => {
     if (showModal) {
       timer = setTimeout(() => {
         setShowModal(false);
+        navigate("/login");
       }, 2000);
     }
     return () => clearTimeout(timer);
-  }, [showModal, navigate]);
+  }, [showModal]);
 
   return (
     <div className="max-h-screen flex w-[100%]">
@@ -299,7 +299,7 @@ const SignUp = () => {
 
             <FloatingLabel
               variant="standard"
-              label="Hospital Registration Date:(dd-mm-yyyy)"
+              label="Hospital Registration Date:(mm-dd-yyyy)"
               id="registrationDate"
               onChange={handleInput}
               className="focus:border-black focus:text-black  "
